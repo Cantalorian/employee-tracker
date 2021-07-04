@@ -88,7 +88,7 @@ function viewAllEmployees() {
 
 // View all roles
 function viewAllRoles() {
-  console.log(`===VIEWING ROLES===`);
+  console.log(`===VIEWING BY ROLES===`);
 
   let query = "SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;";
 
@@ -102,3 +102,56 @@ function viewAllRoles() {
     firstPrompt()
   });
 };
+
+// View all employees in DB
+function viewAllEmployees() {
+  console.log(`===VIEWING EMPLOYEES===`);
+
+  let query = 
+    "SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;";
+  
+  db.query(query, function (err, employees) {
+    if (err) {
+      console.log(err);
+    }
+  
+    console.table(employees)
+  
+    firstPrompt()
+  });
+};
+
+// View all roles
+function viewAllRoles() {
+  console.log(`===VIEWING BY ROLES===`);
+
+  let query = "SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;";
+
+  db.query(query, function (err, roles) {
+    if (err) {
+      console.log(err);
+    }
+
+    console.table(roles)
+  
+    firstPrompt()
+  });
+};
+
+// View all employees by department
+function viewAllDepartments() {
+  console.log(`===VIEWING BY DEPARTMENT===`);
+
+  let query = "SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;";
+
+  db.query(query, function (err, employees) {
+    if (err){
+      console.log(err);
+    }
+
+    console.table(employees)
+    
+    firstPrompt()
+  });
+};
+
