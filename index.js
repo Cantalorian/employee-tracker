@@ -85,3 +85,20 @@ function viewAllEmployees() {
     firstPrompt()
   });
 };
+
+// View all roles
+function viewAllRoles() {
+  console.log(`===VIEWING ROLES===`);
+
+  let query = "SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;";
+
+  db.query(query, function (err, roles) {
+    if (err) {
+      console.log(err);
+    }
+
+    console.table(roles)
+  
+    firstPrompt()
+  });
+};
