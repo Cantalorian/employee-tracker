@@ -25,7 +25,6 @@ function firstPrompt() {
           "View all employees",
           "View all roles",
           "View all departments",
-          "View employees by manager",
           "Update an employee",
           "Add an employee",
           "Add a role",
@@ -61,10 +60,6 @@ function firstPrompt() {
 
         case "Add a department":
           addDepartment();
-          break;
-
-        case "View employees by manager":
-          viewByManager();
           break;
       }
     });
@@ -232,7 +227,7 @@ function addRole() {
           name: "Department",
           type: "list",
           message: "Please select the appropriate department for this role",
-          choices: ["Marketing", "Development", "QA", "Help Desk"],
+          choices: ["Sales", "Engineering", "Finance", "Legal"],
         },
         {
           name: "Title",
@@ -246,11 +241,11 @@ function addRole() {
         },
       ])
       .then(function (data) {
-        if (data.Department === "Marketing") {
+        if (data.Department === "Sales") {
           data.Department = 1;
-        } else if (data.Department === "Development") {
+        } else if (data.Department === "Engineering") {
           data.Department = 2;
-        } else if (data.Department === "QA") {
+        } else if (data.Department === "Finance") {
           data.Department = 3;
         } else {
           data.Department = 4;
@@ -369,72 +364,4 @@ function updateEmployee() {
         console.log(err);
       });
   });
-}
-
-// Chooses manager role for new employee
-// const managersArr = [];
-
-// function selectManager() {
-
-//   let query = "SELECT first_name, last_name FROM employee WHERE manager_id IS NULL";
-
-//   db.query(query, function (err, data) {
-//     if (err){
-//       console.log(err);
-//     }
-//     for (i = 0; i < data.length; i++) {
-//       managersArray.push(data[i].first_name);
-//     }
-//   })
-//   return managersArr;
-// };
-
-// function viewByManager() {
-//   console.log(`===VIEWING BY MANAGER===`);
-
-//   let query = "SELECT * FROM employee WHERE manager_id = NULL";
-
-//   db.query(query, function (err, employee) {
-//     if (err) {
-//       console.log(err);
-//     }
-
-//     console.log(employee);
-
-//     const ids = employee.map(employee => employee.manager_id)
-
-//     console.log(ids);
-
-//     inquirer.prompt([
-//       {
-//         name: "id",
-//         type: "list",
-//         message: "Please select a manager",
-//         choices: ids
-//       }
-//     ])
-//     .then( employee => {
-//     // let managerId = indexOf(employee.manager) + 1
-
-//     console.log("pre query");
-
-//     db.query("SELECT * FROM employee WHERE manager_id = ?",
-//       [
-//         id
-//       ],
-
-//       employees => {
-//         console.log("results function");
-
-//         console.table(employees)
-
-//         firstPrompt()
-//       })
-//       .catch (err => {
-//         if (err) {
-//           console.log(err);
-//         }
-//       });
-//     });
-//   });
-// };
+};
